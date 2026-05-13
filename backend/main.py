@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from routes.predict import router as predict_router
 from routes.intelligence import router as intelligence_router
 
@@ -7,8 +8,13 @@ from services.intelligence import analyze_system
 from services.ai_explainer import generate_ai_explanation
 from services.alert_service import trigger_system_alert, alerts
 
-from datetime import datetime 
+from simulate import run_simulation
+
+from datetime import datetime
+import threading
+import time
 import requests
+
 
 app = FastAPI(
     title="AI Ops System",
@@ -16,16 +22,26 @@ app = FastAPI(
     version="1.0"
 )
 
-# ===== 🔥 NEW: ACTIVE NODE STORAGE =====
+# ===== 🔥 ACTIVE NODE STORAGE =====
 active_node = {}
 process_history = []
 
 HISTORY_LIMIT = 500
 
 # ===== ROUTES =====
-app.include_router(predict_router, prefix="/predict", tags=["Prediction"])
-app.include_router(intelligence_router, prefix="/intelligence", tags=["AI Intelligence"])
+app.include_router(
+    predict_router,
+    prefix="/predict",
+    tags=["Prediction"]
+)
 
+app.include_router(
+    intelligence_router,
+    prefix="/intelligence",
+    tags=["AI Intelligence"]
+)
+
+# ===== CORS =====
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,35 +51,58 @@ app.add_middleware(
 )
 
 
+# ===== 🚀 START BACKGROUND SIMULATION =====
+@app.on_event("startup")
+def start_background_tasks():
+
+    def delayed_start():
+        print("⏳ Waiting before starting simulator...")
+        time.sleep(5)
+
+        print("🚀 Starting background simulation...")
+        run_simulation()
+
+    threading.Thread(
+        target=delayed_start,
+        daemon=True
+    ).start()
+
+
 # ===== HEALTH =====
 @app.get("/")
 def home():
-    return {"message": "AI Ops Backend Running 🚀", "status": "active"}
+    return {
+        "message": "AI Ops Backend Running 🚀",
+        "status": "active"
+    }
 
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy", "service": "AI Ops Backend"}
+    return {
+        "status": "healthy",
+        "service": "AI Ops Backend"
+    }
 
 
 # ===== MAIN PIPELINE =====
 @app.post("/api/process")
 def process(data: dict):
 
-    global active_node   # 🔥 IMPORTANT
+    global active_node
     global process_history
 
     print("\n🔥 ===== PROCESS STARTED =====")
     print("📥 INPUT:", data)
 
-    # 🧠 FULL PIPELINE
+    # ===== 🧠 FULL AI PIPELINE =====
     result = analyze_system(data)
 
     decision = result["decision"]
 
     print("⚡ FINAL DECISION:", decision)
 
-    # 🚨 ALERT SYSTEM
+    # ===== 🚨 ALERT SYSTEM =====
     if decision["level"] == "HIGH":
 
         print("🚨 HIGH RISK DETECTED")
@@ -74,24 +113,30 @@ def process(data: dict):
                 f"High risk ({decision['risk_score']:.2f}) detected!",
                 decision
             )
+
         except Exception as e:
             print("❌ ALERT FAILED:", e)
 
-        # 🟢 ESP32 (optional)
+        # ===== 🟢 ESP32 ALERT =====
         try:
             requests.post(
                 "http://192.168.1.100/alert",
-                json={"status": "HIGH", "risk": decision["risk_score"]},
+                json={
+                    "status": "HIGH",
+                    "risk": decision["risk_score"]
+                },
                 timeout=2,
             )
+
             print("🟢 ESP32 ALERT SENT")
+
         except Exception as e:
             print("⚠️ ESP32 ERROR:", e)
 
     else:
         print("✅ SYSTEM SAFE")
 
-    # ===== 🔥 UPDATE ACTIVE NODE (CORE CHANGE) =====
+    # ===== 🔥 UPDATE ACTIVE NODE =====
     active_node = {
         "node_id": data.get("node_id", "Current-System"),
         "cpu": result["metrics"].get("cpu"),
@@ -104,9 +149,10 @@ def process(data: dict):
 
     print("🟢 ACTIVE NODE UPDATED:", active_node)
 
-    # ===== RESPONSE =====
+    # ===== 🤖 AI EXPLANATION =====
     ai_explanation = generate_ai_explanation(decision)
 
+    # ===== RESPONSE =====
     response_body = {
         "metrics": result["metrics"],
         "log": result["log"],
@@ -116,23 +162,26 @@ def process(data: dict):
         "timestamp": datetime.now().isoformat()
     }
 
+    # ===== SAVE HISTORY =====
     process_history.append({
         "input": data,
         "output": response_body,
         "created_at": datetime.now().isoformat(),
     })
+
     if len(process_history) > HISTORY_LIMIT:
         process_history = process_history[-HISTORY_LIMIT:]
 
     return response_body
 
 
-# ===== 🔥 NEW: GET ACTIVE NODE =====
+# ===== 🔥 GET ACTIVE NODE =====
 @app.get("/api/active-node")
 def get_active_node():
     return active_node
 
 
+# ===== 🔥 GET PROCESS HISTORY =====
 @app.get("/api/process-history")
 def get_process_history():
     return {
@@ -141,10 +190,12 @@ def get_process_history():
     }
 
 
-# ===== ALERTS =====
+# ===== 🚨 ALERTS =====
 @app.get("/api/alerts")
 def get_alerts():
+
     print(f"\n🔥 ALERT COUNT: {len(alerts)}")
+
     return {
         "count": len(alerts),
         "alerts": alerts[::-1]
@@ -153,6 +204,11 @@ def get_alerts():
 
 @app.delete("/api/alerts")
 def clear_alerts():
+
     alerts.clear()
+
     print("🧹 ALERTS CLEARED")
-    return {"message": "All alerts cleared"}
+
+    return {
+        "message": "All alerts cleared"
+    }
