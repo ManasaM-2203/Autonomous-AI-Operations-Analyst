@@ -1,0 +1,62 @@
+[
+  {
+    "cpu": 86,
+    "temperature": 83,
+    "memory": 79,
+    "log": "Memory leak detected with unauthorized root access."
+  },
+  {
+    "cpu": 52,
+    "temperature": 60,
+    "memory": 49,
+    "log": "System stable and responsive."
+  },
+  {
+    "cpu": 72,
+    "temperature": 71,
+    "memory": 68,
+    "log": "Suspicious command execution detected in scheduler service."
+  },
+  {
+    "cpu": 90,
+    "temperature": 92,
+    "memory": 87,
+    "log": "Segmentation fault loop detected with kernel panic risk."
+  },
+  {
+    "cpu": 45,
+    "temperature": 52,
+    "memory": 43,
+    "log": "Routine sync completed."
+  },
+  {
+    "cpu": 67,
+    "temperature": 69,
+    "memory": 64,
+    "log": "Unauthorized API token usage from unknown host."
+  },
+  {
+    "cpu": 93,
+    "temperature": 94,
+    "memory": 89,
+    "log": "Critical breach signature detected and memory corruption observed."
+  },
+  {
+    "cpu": 58,
+    "temperature": 63,
+    "memory": 56,
+    "log": "Service heartbeat normal."
+  },
+  {
+    "cpu": 74,
+    "temperature": 76,
+    "memory": 71,
+    "log": "Exploit-like payload pattern detected in incoming logs."
+  },
+  {
+    "cpu": 40,
+    "temperature": 46,
+    "memory": 39,
+    "log": "No issues detected."
+  }
+]

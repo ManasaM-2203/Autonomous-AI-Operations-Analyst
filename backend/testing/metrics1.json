@@ -1,0 +1,62 @@
+[
+  {
+    "cpu": 35,
+    "temperature": 44,
+    "memory": 38,
+    "log": "System boot completed. Services healthy."
+  },
+  {
+    "cpu": 88,
+    "temperature": 82,
+    "memory": 76,
+    "log": "Unauthorized access attempt detected. Memory leak warning in service auth."
+  },
+  {
+    "cpu": 42,
+    "temperature": 50,
+    "memory": 46,
+    "log": "Routine health check passed."
+  },
+  {
+    "cpu": 57,
+    "temperature": 62,
+    "memory": 52,
+    "log": "System running normally."
+  },
+  {
+    "cpu": 64,
+    "temperature": 70,
+    "memory": 60,
+    "log": "Suspicious process injection detected in worker thread."
+  },
+  {
+    "cpu": 31,
+    "temperature": 40,
+    "memory": 34,
+    "log": "Backup task finished successfully."
+  },
+  {
+    "cpu": 48,
+    "temperature": 54,
+    "memory": 45,
+    "log": "All systems nominal."
+  },
+  {
+    "cpu": 91,
+    "temperature": 90,
+    "memory": 84,
+    "log": "Kernel panic imminent after repeated segmentation fault events."
+  },
+  {
+    "cpu": 39,
+    "temperature": 47,
+    "memory": 41,
+    "log": "Telemetry stream stable."
+  },
+  {
+    "cpu": 69,
+    "temperature": 73,
+    "memory": 66,
+    "log": "Critical database error and unauthorized privilege escalation observed."
+  }
+]

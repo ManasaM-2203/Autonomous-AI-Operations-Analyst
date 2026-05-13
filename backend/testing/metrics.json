@@ -1,0 +1,63 @@
+[
+  {
+    "cpu": 95,
+    "temperature": 95,
+    "memory": 88,
+    "log": "Error: Memory leak detected. Segmentation fault. Critical system failure."
+  },
+  {
+    "cpu": 50,
+    "temperature": 60,
+    "memory": 45,
+    "log": "System running normally. All services operational."
+  },
+  
+  {
+    "cpu": 30,
+    "temperature": 45,
+    "memory": 40,
+    "log": "System performance optimal. No issues detected."
+  },
+  {
+    "cpu": 92,
+    "temperature": 92,
+    "memory": 85,
+    "log": "Critical: Multiple failed authentication attempts. Unauthorized access detected. Kernel panic imminent."
+  },
+  {
+    "cpu": 40,
+    "temperature": 55,
+    "memory": 50,
+    "log": "Routine maintenance completed successfully."
+  },
+  {
+    "cpu": 72,
+    "temperature": 68,
+    "memory": 70,
+    "log": "Warning: High disk I/O activity detected. Network latency increased."
+  },
+  {
+    "cpu": 25,
+    "temperature": 40,
+    "memory": 35,
+    "log": "Backup completed. System idle."
+  },
+  {
+    "cpu": 30,
+    "temperature": 45,
+    "memory": 40,
+    "log": "System performance optimal. No issues detected."
+  },
+  {
+    "cpu": 60,
+    "temperature": 65,
+    "memory": 55,
+    "log": "All systems nominal. Monitoring active."
+  },
+  {
+    "cpu": 20,
+    "temperature": 38,
+    "memory": 30,
+    "log": "System startup initiated. Initializing services."
+  }
+]
